@@ -17,7 +17,7 @@ class PrestadordeServicioSeeder extends Seeder
         PrestadordeServicio::factory()
             ->count(10)
             ->hasCursos(10)
-            ->hasCertificaciones(6)
+            ->hasCertificaciones(3)
             ->hasServicios(20)
             ->create();
 

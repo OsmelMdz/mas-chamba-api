@@ -17,7 +17,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-            'role' => 'required|in:administrador,prestador', // Asegúrate de que el rol sea 'administrador' o 'prestador de servicios'
+            'role' => 'required|in:administradorGeneral,administradorUser,prestadordeServicio', // Asegúrate de que el rol sea 'administrador' o 'prestador de servicios'
         ]);
 
         $role = Role::where('nombre', $request->role)->first();

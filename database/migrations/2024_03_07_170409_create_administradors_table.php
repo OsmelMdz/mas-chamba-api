@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('password');
             $table->enum('estatus', ['Activo', 'Inactivo']); // Cambia el estado del administrador a activo o inactivo
-            $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users');
+            /* $table->unsignedBigInteger('id_user');
+            $table->foreign('id_user')->references('id')->on('users'); */
             $table->rememberToken();
             $table->timestamps();
         });

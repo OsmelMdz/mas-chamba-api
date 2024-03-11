@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('email');
             $table->enum('tipo_cuenta', ['Premiun', 'Normal']); // Cambia tipo de cuenta del prestador de servicio a premiun o normal
             $table->enum('estatus', ['Activo', 'Inactivo']); // Cambia el estado del prestador de servicio a activo o inactivo
-            $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users');
+           /*  $table->unsignedBigInteger('id_user');
+            $table->foreign('id_user')->references('id')->on('users'); */
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\CursoController;
 use App\Http\Controllers\Api\V1\ServicioController;
 use App\Http\Controllers\Api\V1\PrestadordeServicioController;
 use App\Http\Controllers\Api\V1\VisitanteController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,11 +20,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/* Route::post('auth/register',[AuthController::class, 'create']);
+Route::post('auth/login',[AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->get('/user', function () {
+    Route::resource('prestadores', PrestadordeServicioController::class);
+    Route::resource('visitantes', VisitanteController::class);
+    Route::get('auth/logout',[AuthController::class,'logout']);
+}); */
+
+Route::post('auth/register',[AuthController::class, 'register']);
+Route::post('auth/login',[AuthController::class, 'login']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function () {
+
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'middleware'=> 'auth:sanctum'], function () {
     Route::apiResource('prestadores', PrestadordeServicioController::class);
     Route::apiResource('cursos', CursoController::class);
     Route::apiResource('servicios', ServicioController::class);

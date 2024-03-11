@@ -13,7 +13,9 @@ class StorePrestadordeServicioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        //return true;¿
+        $user = $this->user();
+        return $user != null && $user->tokenCan('create');
     }
 
     /**
@@ -35,7 +37,7 @@ class StorePrestadordeServicioRequest extends FormRequest
             'identificacion_personal' => ['required', 'string'],
             'comprobante_domicilio' => ['required', 'string'],
             'email' => ['required', 'email'],
-            'tipo_cuenta' => ['required', Rule::in(['Premiun','Normal'])],
+            'tipo_cuenta' => ['required', Rule::in(['Premiun', 'Normal'])],
             'estatus' => ['required', 'string'],
         ];
     }

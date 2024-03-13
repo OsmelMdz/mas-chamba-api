@@ -23,11 +23,13 @@ class PrestadordeServicioController extends Controller
         $includeCursos = $request->query('includeCursos');
         $inlcudeServicios = $request->query('includeServicios');
         $includeCertificaciones = $request->query('includeCertificaciones');
+        $includeZonas = $request->query('includeZonas');
         $prestadoresdeservicios = PrestadordeServicio::where($filterItems);
-        if ($includeCursos && $includeCertificaciones && $inlcudeServicios) {
+        if ($includeCursos && $includeCertificaciones && $inlcudeServicios && $includeZonas) {
             $prestadoresdeservicios = $prestadoresdeservicios->with('cursos');
             $prestadoresdeservicios = $prestadoresdeservicios->with('certificaciones');
             $prestadoresdeservicios = $prestadoresdeservicios->with('servicios');
+            $prestadoresdeservicios = $prestadoresdeservicios->with('zonas');
         }
         return new PrestadordeServicioCollection($prestadoresdeservicios->paginate()->appends($request->query()));
         /*  if (count($filterItems) == 0) {
@@ -64,8 +66,9 @@ class PrestadordeServicioController extends Controller
         $includeCursos = request()->query('includeCursos');
         $includeCertificaciones = request()->query('includeCertificaciones');
         $inlcudeServicios = request()->query('includeServicios');
-        if ($includeCursos && $includeCertificaciones && $inlcudeServicios) {
-            return new PrestadordeServicioResource($prestadordeServicio->loadMissing('cursos', 'certificaciones', 'servicios'));
+        $inlcudeZonas = request()->query('includeZonas');
+        if ($includeCursos && $includeCertificaciones && $inlcudeServicios && $inlcudeZonas) {
+            return new PrestadordeServicioResource($prestadordeServicio->loadMissing('cursos', 'certificaciones', 'servicios','zonas'));
         }
         return new PrestadordeServicioResource($prestadordeServicio);
     }

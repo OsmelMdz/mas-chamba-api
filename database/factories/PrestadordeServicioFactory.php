@@ -39,7 +39,7 @@ class PrestadordeServicioFactory extends Factory
             'identificacion_personal' => $identificacionPersonal,
             'comprobante_domicilio' => $comprobanteDomicilio,
             'estatus' => $this->faker->randomElement(['Activo', 'Inactivo']),
-            'id_user' => $user->id
+            'id_user' => $user->id,
         ];
     }
 

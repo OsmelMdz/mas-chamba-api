@@ -32,6 +32,7 @@ class PrestadordeServicioSeeder extends Seeder
                 ->hasCursos(10)
                 ->hasCertificaciones(3)
                 ->hasServicios(20)
+                ->hasZonas(1)
                 ->create();
         }
     }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\CertificacionController;
 use App\Http\Controllers\Api\V1\CursoController;
 use App\Http\Controllers\Api\V1\ServicioController;
 use App\Http\Controllers\Api\V1\PrestadordeServicioController;
+use App\Http\Controllers\Api\V1\ZonaController;
 use App\Http\Controllers\Api\V1\VisitanteController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
@@ -30,11 +31,17 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'm
     Route::apiResource('cursos', CursoController::class);
     Route::apiResource('servicios', ServicioController::class);
     Route::apiResource('certificaciones', CertificacionController::class);
+    Route::apiResource('zonas',ZonaController::class);
     Route::apiResource('visitantes', VisitanteController::class);
     Route::post('cursos/bulk', ['uses' => 'CursoController@bulkStore']);
     Route::post('servicios/bulk', ['uses' => 'ServicioController@bulkStore']);
     Route::post('certificaciones/bulk', ['uses' => 'CertificacionController@bulkStore']);
+    Route::post('zonas/bulk', ['uses' => 'ZonaController@bulkStore']);
+     //Agregar o eliminar un curso a un prestador de servicio
+    Route::put("agregarcursoprestador/{id}", [PrestadordeServicioController::class, 'agregarCurso']);
+    Route::delete("eliminarcursoprestador/{id}", [PrestadordeServicioController::class, 'eliminarCurso']);
 });
+
 //Rutas para el control de autenticación y registro
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function () {
     Route::post('register', [AuthController::class, 'register']);

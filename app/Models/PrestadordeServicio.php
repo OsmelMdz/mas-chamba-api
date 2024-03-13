@@ -40,4 +40,8 @@ class PrestadordeServicio extends Model
     {
         return $this->hasMany(Certificacion::class);
     }
+    public function zonas()
+    {
+        return $this->hasMany(Zona::class);
+    }
 }

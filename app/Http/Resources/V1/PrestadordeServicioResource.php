@@ -32,6 +32,7 @@ class PrestadordeServicioResource extends JsonResource
             'cursos' => CursoResource::collection($this->whenLoaded('cursos')),
             'certificaciones' => CertificacionResource::collection($this->whenLoaded('certificaciones')),
             'servicios' => ServicioResource::collection($this->whenLoaded('servicios')),
+            'zonas' => ZonaResource::collection($this->whenLoaded('zonas')),
         ];
     }
 }

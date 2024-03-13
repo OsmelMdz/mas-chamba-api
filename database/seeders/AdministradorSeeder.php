@@ -2,36 +2,34 @@
 
 namespace Database\Seeders;
 
-use App\Models\PrestadordeServicio;
+use App\Models\Administrador;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class PrestadordeServicioSeeder extends Seeder
+class AdministradorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-
-    public function run(): void
+    public function run()
     {
-        // Obtener todos los usuarios que tengan el rol de "prestador de servicio"
+
         $usuarios = User::whereHas('roles', function ($query) {
-            $query->where('nombre', 'prestadorDeServicio');
+            $query->where('nombre', 'administradorBasico');
         })->get();
+
 
         // Iterar sobre los usuarios y crear un prestador de servicios para cada uno
         foreach ($usuarios as $usuario) {
-            PrestadordeServicio::factory()
+            Administrador::factory()
                 ->count(1)
                 ->state(function (array $attributes) use ($usuario) {
                     return [
                         'id_user' => $usuario->id,
                     ];
                 })
-                ->hasCursos(10)
-                ->hasCertificaciones(3)
-                ->hasServicios(20)
                 ->create();
         }
     }

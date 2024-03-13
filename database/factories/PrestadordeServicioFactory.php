@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,6 +25,8 @@ class PrestadordeServicioFactory extends Factory
         $identificacionPersonal = $this->faker->unique()->word() . '.pdf';
         $comprobanteDomicilio = $this->faker->unique()->word() . '.pdf';
         $imagen = $this->faker->unique(true)->word() . '.jpg';
+          // Obtener un usuario existente de forma aleatoria
+        $user = User::inRandomOrder()->first();
         return [
             'nombre' => $nombre,
             'a_paterno' => $apellidoPaterno,
@@ -36,6 +39,7 @@ class PrestadordeServicioFactory extends Factory
             'identificacion_personal' => $identificacionPersonal,
             'comprobante_domicilio' => $comprobanteDomicilio,
             'estatus' => $this->faker->randomElement(['Activo', 'Inactivo']),
+            'id_user' => $user->id
         ];
     }
 

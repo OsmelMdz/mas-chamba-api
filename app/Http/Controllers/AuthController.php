@@ -54,27 +54,48 @@ class AuthController extends Controller
             'role' => 'required|in:administradorGeneral,administradorBasico,prestadorDeServicio',
         ]);
 
-        // Create the user
+        // Determinar qué tipo de token generar según el rol del usuario
+        switch ($request->role) {
+            case 'administradorGeneral':
+                $tokenName = 'admin-token';
+                $permissions = ['create', 'update', 'delete'];
+                break;
+            case 'administradorBasico':
+                $tokenName = 'update-token';
+                $permissions = ['create', 'update'];
+                break;
+            case 'prestadorDeServicio':
+                $tokenName = 'basic-token';
+                $permissions = ['none'];
+                break;
+            default:
+                return response()->json([
+                    'message' => 'Rol no válido',
+                ], 400);
+        }
+
+        // Crear el usuario
         $user = User::create([
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
 
-        // Find the role based on the role name
         $role = Role::where('nombre', $request->role)->first();
+        if ($role) {
+            $user->roles()->attach($role);
+        }
 
-        // Attach the role to the user using the predefined relationship
-        $user->roles()->attach($role->id);
+        // Generar el token
+        $token = $user->createToken($tokenName, $permissions);
 
-        // Generate token
-        $token = $user->createToken('auth_token')->plainTextToken;
-
+        // Devolver la respuesta con el token
         return response()->json([
-            'access_token' => $token,
+            'access_token' => $token->plainTextToken,
             'token_type' => 'Bearer',
             'message' => 'Usuario creado con éxito',
         ]);
     }
+
 
 
 

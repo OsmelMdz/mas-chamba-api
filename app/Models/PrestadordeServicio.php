@@ -20,7 +20,7 @@ class PrestadordeServicio extends Model
         'identificacion_personal',
         'comprobante_domicilio',
         'tipo_cuenta',
-        'user_id',
+        'id_user',
         'estatus',
     ];
 

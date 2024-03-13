@@ -8,11 +8,12 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Administrator;
 
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    /* public function register(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
@@ -43,19 +44,56 @@ class AuthController extends Controller
         ]);
     }
 
-    public function login(Request $request)
+ */
+
+    public function register(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            'role' => 'required|in:administradorGeneral,administradorBasico,prestadorDeServicio',
         ]);
-        if (!auth()->attempt($request->only('email', 'password'))) {
+
+        // Create the user
+        $user = User::create([
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        // Find the role based on the role name
+        $role = Role::where('nombre', $request->role)->first();
+
+        // Attach the role to the user using the predefined relationship
+        $user->roles()->attach($role->id);
+
+        // Generate token
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'message' => 'Usuario creado con éxito',
+        ]);
+    }
+
+
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (!Auth::attempt($credentials)) {
             return response()->json([
                 'message' => 'Credenciales de inicio de sesión inválidas',
             ], 401);
         }
-        $user = User::where('email', $request['email'])->firstOrFail();
+
+        $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
@@ -63,10 +101,10 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        if (auth()->check()) {
-            auth()->user()->tokens()->delete();
+        if ($request->user()) {
+            $request->user()->tokens()->delete();
             return response()->json([
                 'status' => true,
                 'message' => 'Usuario deslogueado con éxito'
@@ -74,7 +112,7 @@ class AuthController extends Controller
         } else {
             return response()->json([
                 'status' => false,
-                'message' => 'No se ha iniciado sesión'
+                'message' => 'Usuario no autenticado'
             ], 401);
         }
     }

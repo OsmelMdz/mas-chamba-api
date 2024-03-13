@@ -16,8 +16,6 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('telefono');
             $table->enum('estatus', ['Activo', 'Inactivo']); // Cambia el estado del visitante a activo o inactivo
-            $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users');
             $table->timestamps();
         });
     }

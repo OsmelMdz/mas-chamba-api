@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('roles_asignados', function (Blueprint $table) {
-            //$table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('rol_id');
             $table->timestamps();

@@ -19,14 +19,13 @@ return new class extends Migration
             $table->date('fecha_nacimiento');
             $table->text('imagen');
             $table->enum('sexo', ['Hombre', 'Mujer', 'Prefiero no decir']);
-            $table->string('telefono');
+            $table->string('telefono')->unique();
             $table->text('identificacion_personal');
             $table->text('comprobante_domicilio');
-            $table->string('email');
             $table->enum('tipo_cuenta', ['Premiun', 'Normal']); // Cambia tipo de cuenta del prestador de servicio a premiun o normal
             $table->enum('estatus', ['Activo', 'Inactivo']); // Cambia el estado del prestador de servicio a activo o inactivo
-           /*  $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users'); */
+            $table->unsignedBigInteger('id_user');
+            $table->foreign('id_user')->references('id')->on('users');
             $table->timestamps();
         });
     }

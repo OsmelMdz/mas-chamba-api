@@ -19,10 +19,15 @@ class PrestadordeServicio extends Model
         'telefono',
         'identificacion_personal',
         'comprobante_domicilio',
-        'email',
         'tipo_cuenta',
+        'user_id',
         'estatus',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'roles_asignados');
+    }
     public function cursos()
     {
         return $this->hasMany(Curso::class);

@@ -35,7 +35,6 @@ class PrestadordeServicioFactory extends Factory
             'telefono' => $this->faker->phoneNumber(),
             'identificacion_personal' => $identificacionPersonal,
             'comprobante_domicilio' => $comprobanteDomicilio,
-            'email' => $this->faker->email(),
             'estatus' => $this->faker->randomElement(['Activo', 'Inactivo']),
         ];
     }

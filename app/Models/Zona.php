@@ -12,10 +12,8 @@ class Zona extends Model
         'nombre',
         'estatus'
     ];
-
-
-    public function prestadordeServicio()
+    public function prestadoresDeServicio()
     {
-        return $this->belongsTo(PrestadordeServicio::class);
+        return $this->belongsToMany(PrestadordeServicio::class);
     }
 }

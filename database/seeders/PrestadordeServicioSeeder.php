@@ -29,10 +29,10 @@ class PrestadordeServicioSeeder extends Seeder
                         'id_user' => $usuario->id,
                     ];
                 })
-                ->hasCursos(10)
-                ->hasCertificaciones(3)
-                ->hasServicios(20)
-                ->hasZonas(1)
+                ->hasCursos(2)
+                ->hasCertificaciones(1)
+                ->hasServicios(5)
+                ->hasZonas(10)
                 ->create();
         }
     }

@@ -26,7 +26,6 @@ class PrestadordeServicioResource extends JsonResource
             'telefono' => $this->telefono,
             'identificacion_personal' => $this->identificacion_personal,
             'comprobante_domicilio' => $this->comprobante_domicilio,
-            'email' => $this->email,
             'tipo_cuenta' => $this->tipo_cuenta,
             'estatus' => $this->estatus,
             'cursos' => CursoResource::collection($this->whenLoaded('cursos')),

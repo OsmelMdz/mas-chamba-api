@@ -36,9 +36,8 @@ class StorePrestadordeServicioRequest extends FormRequest
             'telefono' => ['required', 'string'],
             'identificacion_personal' => ['required', 'string'],
             'comprobante_domicilio' => ['required', 'string'],
-            'email' => ['required', 'email'],
             'tipo_cuenta' => ['required', Rule::in(['Premiun', 'Normal'])],
-            'estatus' => ['required', 'string'],
+            'estatus' => ['required', 'string']
         ];
     }
 

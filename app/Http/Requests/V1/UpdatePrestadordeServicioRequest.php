@@ -35,7 +35,6 @@ class UpdatePrestadordeServicioRequest extends FormRequest
                 'telefono' => ['required', 'string'],
                 'identificacion_personal' => ['required', 'string'],
                 'comprobante_domicilio' => ['required', 'string'],
-                'email' => ['required', 'email'],
                 'tipo_cuenta' => ['required', Rule::in(['Premiun', 'Normal'])],
                 'estatus' => ['required', 'string'],
             ];
@@ -50,7 +49,6 @@ class UpdatePrestadordeServicioRequest extends FormRequest
                 'telefono' => ['sometimes', 'required', 'string'],
                 'identificacion_personal' => ['sometimes', 'required', 'string'],
                 'comprobante_domicilio' => ['sometimes', 'required', 'string'],
-                'email' => ['sometimes', 'required', 'email'],
                 'tipo_cuenta' => ['sometimes', 'required', Rule::in(['Premiun', 'Normal'])],
                 'estatus' => ['sometimes', 'required', 'string'],
             ];

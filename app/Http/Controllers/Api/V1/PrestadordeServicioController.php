@@ -32,13 +32,6 @@ class PrestadordeServicioController extends Controller
             $prestadoresdeservicios = $prestadoresdeservicios->with('zonas');
         }
         return new PrestadordeServicioCollection($prestadoresdeservicios->paginate()->appends($request->query()));
-        /*  if (count($filterItems) == 0) {
-            return new PrestadordeServicioCollection(PrestadordeServicio::paginate());
-        } else {
-        } */
-        // PrestadordeServicio::where($queryItems)
-        //return PrestadordeServicio::all();
-        // return new PrestadordeServicioCollection(PrestadordeServicio::all());
     }
 
     /**
@@ -98,8 +91,13 @@ class PrestadordeServicioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PrestadordeServicio $prestadordeServicio)
+    public function destroy($id)
     {
-        //
+        $prestadordeServicio = PrestadordeServicio::find($id);
+        if (!$prestadordeServicio) {
+            return response()->json(['message' => 'Prestador de servicio no encontrado'], 404);
+        }
+        $prestadordeServicio->delete();
+        return response()->json(['message' => 'Prestador de servicio eliminado']);
     }
 }

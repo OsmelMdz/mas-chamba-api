@@ -78,8 +78,13 @@ class VisitanteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Visitante $visitante)
+    public function destroy($id)
     {
-        //
+        $visitante = Visitante::find($id);
+        if(!$visitante){
+            return response()->json(['message' => 'Visitante no encontrado'], 404);
+        }
+        $visitante->delete();
+        return response()->json(['message' => 'Visitante eliminado'], 200);
     }
 }

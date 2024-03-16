@@ -59,8 +59,13 @@ class AdministradorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Administrador $administrador)
+    public function destroy($id)
     {
-        //
+        $administrador = Administrador::find($id);
+        if(!$administrador){
+            return response()->json(['message' => 'Administrador no encontrado'], 404);
+        }
+        $administrador->delete();
+        return response()->json(['message' => 'Administrador eliminado'], 200);
     }
 }

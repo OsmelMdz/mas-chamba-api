@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use Illuminate\Http\Request;
+
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ZonaCollection;
 use App\Http\Resources\V1\ZonaResource;
 use App\Http\Requests\V1\StoreZonaRequest;
 use App\Http\Requests\V1\UpdateZonaRequest;
-use App\Http\Requests\V1\BulkStoreZonaRequest;
 use App\Filters\V1\ZonaFilter;
 use App\Models\Zona;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use App\Http\Requests\V1\BulkStoreZonaRequest;
 
 class ZonaController extends Controller
 {
-/**
+    /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
@@ -23,11 +24,11 @@ class ZonaController extends Controller
         $filter = new ZonaFilter();
         $queryItems = $filter->transform($request); // PrestadordeServicio::where([['colum','operador','value']])
 
-        if(count($queryItems) == 0){
+        if (count($queryItems) == 0) {
             return new ZonaCollection(Zona::paginate());
-        }else{
-            $cursos = Zona::where($queryItems)->paginate();
-            return new ZonaCollection($cursos->appends($request->query()));
+        } else {
+            $zonas = Zona::where($queryItems)->paginate();
+            return new ZonaCollection($zonas->appends($request->query()));
         }
     }
 
@@ -41,7 +42,7 @@ class ZonaController extends Controller
 
     public function bulkStore(BulkStoreZonaRequest $request)
     {
-        $data = collect($request->all())->map(function($arr, $key){
+        $data = collect($request->all())->map(function ($arr, $key) {
             if (Arr::exists($arr, 'prestadorde_servicio_id')) {
                 $arr['prestadorde_servicio_id'] = $arr['prestadorde_servicio_id'] ?? null;
             }
@@ -65,15 +66,15 @@ class ZonaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Zona $curso)
+    public function show(Zona $zona)
     {
-        return new ZonaResource($curso);
+        return new ZonaResource($zona);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Zona $curso)
+    public function edit(Zona $zona)
     {
         //
     }
@@ -83,19 +84,24 @@ class ZonaController extends Controller
      */
     public function update(UpdateZonaRequest $request, $id)
     {
-        $curso = Zona::find($id);
-        if(!$curso){
+        $zona = Zona::find($id);
+        if (!$zona) {
             return response()->json(['message' => 'Zona no encontrado'], 404);
         }
-        $curso->update($request->all());
-        return new ZonaResource($curso);
+        $zona->update($request->all());
+        return new ZonaResource($zona);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Zona $curso)
+    public function destroy($id)
     {
-        //
+        $zona = Zona::find($id);
+        if (!$zona) {
+            return response()->json(['message' => 'Zona no encontrado'], 404);
+        }
+        $zona->delete();
+        return response()->json(['message' => 'Zona eliminado'], 200);
     }
 }

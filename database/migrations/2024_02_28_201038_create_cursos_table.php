@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('descripcion');
-            $table->text('imagen');
+            $table->binary('imagen');
             $table->enum('estatus', ['Habilitado', 'Deshabilitado']);
             $table->unsignedBigInteger('prestadorde_servicio_id');
             $table->foreign('prestadorde_servicio_id')->references('id')->on('prestadorde_servicios');

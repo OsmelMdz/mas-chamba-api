@@ -20,8 +20,6 @@ class ServicioFilter extends ApiFilter
     ];
 
     protected $operatorMap = [
-        'Normal' => '=',
-        'Premiun' => '=',
         'eq'=> '=',
         'neq'=> '!=',
         'gt'=> '>',

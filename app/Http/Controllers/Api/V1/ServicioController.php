@@ -96,8 +96,13 @@ class ServicioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Servicio $servicio)
+    public function destroy($id)
     {
-        //
+        $servicio = Servicio::find($id);
+        if(!$servicio){
+            return response()->json(['message' => 'Certificado no encontrado'], 404);
+        }
+        $servicio->delete();
+        return response()->json(['message' => 'Certificado eliminado'], 200);
     }
 }

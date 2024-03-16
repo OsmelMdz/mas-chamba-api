@@ -61,7 +61,22 @@ class CursoController extends Controller
      */
     public function store(StoreCursoRequest $request)
     {
-        return new CursoResource(Curso::create($request->all()));
+        // Validar y procesar la solicitud
+        $validatedData = $request->validated();
+
+        // Procesar la imagen si se proporciona
+        if ($request->hasFile('imagen')) {
+            $imagen = $request->file('imagen');
+            $rutaImagen = $imagen->store('imagenes/cursos', 'public'); // Guardar la imagen en el directorio 'storage/app/public/imagenes/cursos'
+            $validatedData['imagen'] = $rutaImagen;
+        }
+
+        // Crear el nuevo curso con los datos validados
+        $curso = Curso::create($validatedData);
+
+        // Devolver una respuesta exitosa
+        return new CursoResource($curso);
+        //return new CursoResource(Curso::create($request->all()));
     }
 
     /**
@@ -96,8 +111,13 @@ class CursoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Curso $curso)
+    public function destroy($id)
     {
-        //
+        $curso = Curso::find($id);
+        if(!$curso){
+            return response()->json(['message' => 'Curso no encontrado'], 404);
+        }
+        $curso->delete();
+        return response()->json(['message' => 'Curso eliminado'], 200);
     }
 }

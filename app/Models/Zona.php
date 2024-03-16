@@ -12,6 +12,7 @@ class Zona extends Model
         'nombre',
         'estatus'
     ];
+    
     public function prestadoresDeServicio()
     {
         return $this->belongsToMany(PrestadordeServicio::class);

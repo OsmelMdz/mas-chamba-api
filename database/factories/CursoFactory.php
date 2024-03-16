@@ -23,7 +23,7 @@ class CursoFactory extends Factory
             'prestadorde_servicio_id' => $prestadorId,
             'nombre' => $this->faker->sentence(),
             'descripcion' => $this->faker->text(200),
-            'imagen' => $imagen,
+            'imagen' => $this->faker->image('public/storage/images', 400, 300, null, false),
             'estatus' => $this->faker->randomElement(['Habilitado', 'Deshabilitado']),
         ];
     }

@@ -20,8 +20,6 @@ class CertificacionFilter extends ApiFilter
     ];
 
     protected $operatorMap = [
-        'Normal' => '=',
-        'Premiun' => '=',
         'eq'=> '=',
         'neq'=> '!=',
         'gt'=> '>',

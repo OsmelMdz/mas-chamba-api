@@ -97,8 +97,13 @@ class CertificacionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Certificacion $certificacion)
+    public function destroy($id)
     {
-        //
+        $certificacion = Certificacion::find($id);
+        if(!$certificacion){
+            return response()->json(['message' => 'Certificado no encontrado'], 404);
+        }
+        $certificacion->delete();
+        return response()->json(['message' => 'Certificado eliminado'], 200);
     }
 }
